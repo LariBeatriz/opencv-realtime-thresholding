@@ -576,3 +576,4 @@ Em aplicações mais complexas, técnicas como **threshold adaptativo**, **Otsu*
 Projeto acadêmico desenvolvido por:
 
 * **Larissa Beatriz**
+* **Marcella Carvalho**

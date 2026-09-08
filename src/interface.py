@@ -1,10 +1,12 @@
 import cv2
+import numpy as np
 
 
 JANELA_ORIGINAL = "Original"
 JANELA_CINZA = "Escala de cinza"
 JANELA_THRESHOLD = "Threshold"
 JANELA_CONTROLE = "Controle"
+JANELA_HISTOGRAMA = "Histograma"
 
 NOME_TRACKBAR = "Threshold"
 
@@ -49,6 +51,50 @@ def obter_threshold():
     )
 
 
+def criar_imagem_histograma(histograma):
+    """Cria uma representação visual do histograma."""
+    largura = 512
+    altura = 400
+
+    imagem = np.zeros(
+        (altura, largura, 3),
+        dtype=np.uint8
+    )
+
+    histograma_normalizado = cv2.normalize(
+        histograma,
+        None,
+        0,
+        altura,
+        cv2.NORM_MINMAX,
+    )
+
+    largura_bin = largura // 256
+
+    for i in range(256):
+        valor = int(histograma_normalizado[i])
+
+        cv2.line(
+            imagem,
+            (i * largura_bin, altura),
+            (i * largura_bin, altura - valor),
+            (255, 255, 255),
+            1,
+        )
+
+    return imagem
+
+
+def exibir_histograma(histograma):
+    """Exibe o histograma da imagem."""
+    imagem_histograma = criar_imagem_histograma(histograma)
+
+    cv2.imshow(
+        JANELA_HISTOGRAMA,
+        imagem_histograma
+    )
+
+
 def obter_tecla():
     """Obtém a tecla pressionada pelo usuário."""
     return cv2.waitKey(1) & 0xFF
@@ -61,6 +107,7 @@ def janela_foi_fechada():
         JANELA_CINZA,
         JANELA_THRESHOLD,
         JANELA_CONTROLE,
+        JANELA_HISTOGRAMA,
     ]
 
     for janela in janelas:

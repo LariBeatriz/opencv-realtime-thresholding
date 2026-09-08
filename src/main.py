@@ -8,12 +8,14 @@ from webcam import (
 from processamento import (
     converter_para_cinza,
     aplicar_threshold,
+    calcular_histograma,
 )
 
 from interface import (
     exibir_frame_original,
     exibir_frame_cinza,
     exibir_frame_threshold,
+    exibir_histograma,
     criar_controle_threshold,
     obter_threshold,
     obter_tecla,
@@ -43,6 +45,8 @@ def main():
 
             frame_cinza = converter_para_cinza(frame)
 
+            histograma = calcular_histograma(frame_cinza)
+
             threshold = obter_threshold()
 
             frame_threshold = aplicar_threshold(
@@ -53,7 +57,7 @@ def main():
             exibir_frame_original(frame)
             exibir_frame_cinza(frame_cinza)
             exibir_frame_threshold(frame_threshold)
-
+            exibir_histograma(histograma)
             tecla = obter_tecla()
 
             if deve_encerrar(tecla):

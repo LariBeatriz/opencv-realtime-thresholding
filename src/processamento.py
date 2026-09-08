@@ -16,3 +16,16 @@ def aplicar_threshold(frame_cinza, threshold):
     )
 
     return frame_threshold
+
+
+def calcular_histograma(frame_cinza):
+    """Calcula o histograma da imagem em escala de cinza."""
+    histograma = cv2.calcHist(
+        [frame_cinza],
+        [0],
+        None,
+        [256],
+        [0, 256],
+    )
+
+    return histograma
